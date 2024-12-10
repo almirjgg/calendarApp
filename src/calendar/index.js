@@ -3,3 +3,4 @@ export * from './Components/Navbar';
 export * from './Components/CalendarEventBox';
 export * from './Components/CalendarModal';
 export * from './Components/FabAddNew';
+export * from './Components/FabDelete';
