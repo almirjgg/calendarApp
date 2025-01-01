@@ -7,6 +7,7 @@ import {
   onRegisterErrorMessage,
 } from '../store';
 import { calendarApi } from '../api';
+import { swlHandlerError } from '../helpers';
 
 export const useAuthStore = () => {
   const dispatch = useDispatch();
@@ -42,10 +43,7 @@ export const useAuthStore = () => {
 
       dispatch(onLogin({ userName, id }));
     } catch (error) {
-      const { data } = error.response;
-      const errorsList = data.errors
-        ? Object.values(data.errors).map(({ msg }) => ({ error: msg }))
-        : [{ msg: data.msg }];
+      const errorsList = swlHandlerError(error);
       dispatch(onRegisterErrorMessage(errorsList));
     }
   };
