@@ -1,5 +1,7 @@
-import { useForm } from '../../hooks';
+import { useAuthStore, useForm } from '../../hooks';
 import './LoginPage.css';
+import { SwlErrors } from '../componentes/SwlErrors';
+
 const loginFormFields = {
   loginEmail: '',
   loginPassword: '',
@@ -22,12 +24,17 @@ export const LoginPage = () => {
     onInputChange: onRegisterInputChange,
   } = useForm(registerFormFields);
 
+  const { startLogin, errorMessage, startRegister } = useAuthStore();
+
   const loginSubmit = e => {
     e.preventDefault();
+    startLogin({ email: loginEmail, password: loginPassword });
   };
   const registerSubmit = e => {
     e.preventDefault();
+    startRegister({ email: registerEmail, password: registerPassword, name: registerName });
   };
+
   return (
     <div className='container login-container'>
       <div className='row'>
@@ -111,6 +118,7 @@ export const LoginPage = () => {
           </form>
         </div>
       </div>
+      {errorMessage && <SwlErrors errorMessage={errorMessage} />}
     </div>
   );
 };

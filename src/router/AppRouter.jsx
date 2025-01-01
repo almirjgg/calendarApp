@@ -1,8 +1,10 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { CalendarPage } from '../calendar';
 import { LoginPage } from '../auth';
+import { useSelector } from 'react-redux';
 
 export const AppRouter = () => {
+  // const { status } = useSelector(state => state.auth);
   const authStatus = 'checking';
   return (
     <Routes>
