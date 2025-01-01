@@ -13,6 +13,15 @@ export const useAuthStore = () => {
   const dispatch = useDispatch();
   const { status, user, errorMessage } = useSelector(state => state.auth);
 
+  const setToken = token => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('token-init-date', new Date().getTime());
+  };
+
+  const removeToken = () => {
+    localStorage.clear();
+  };
+
   const startLogin = async ({ email, password }) => {
     dispatch(onChekingCredentials());
 
@@ -20,9 +29,7 @@ export const useAuthStore = () => {
       const { data } = await calendarApi.post('/auth', { email, password });
       const { token, name, uid } = data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('token-init-date', new Date().getTime());
-
+      setToken(token);
       dispatch(onLogin({ name, uid }));
     } catch (error) {
       dispatch(onLogout('wrong credentials'));
@@ -38,9 +45,7 @@ export const useAuthStore = () => {
       const { data } = await calendarApi.post('/auth/new', { email, password, name });
       const { token, name: userName, id } = data;
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('token-init-date', new Date().getTime());
-
+      setToken(token);
       dispatch(onLogin({ userName, id }));
     } catch (error) {
       const errorsList = swlHandlerError(error);
@@ -48,7 +53,24 @@ export const useAuthStore = () => {
     }
   };
 
+  const checkAuthToken = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return dispatch(onLogout());
+
+    try {
+      const { data } = await calendarApi.get('/auth/renew');
+      const { token, name, uid } = data;
+
+      setToken(token);
+      dispatch(onLogin({ name, uid }));
+    } catch (error) {
+      removeToken();
+      dispatch(onLogout());
+    }
+  };
+
   const startLogout = async () => {
+    removeToken();
     dispatch(onLogout());
   };
 
@@ -59,5 +81,6 @@ export const useAuthStore = () => {
     startLogin,
     startLogout,
     startRegister,
+    checkAuthToken,
   };
 };
