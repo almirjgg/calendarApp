@@ -2,8 +2,6 @@ import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 
 export const SwlErrors = ({ errorMessage }) => {
-  console.log(errorMessage);
-
   useEffect(() => {
     if (!errorMessage) return;
 
