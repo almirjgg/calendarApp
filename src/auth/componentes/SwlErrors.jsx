@@ -2,15 +2,17 @@ import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 
 export const SwlErrors = ({ errorMessage }) => {
+  console.log(errorMessage);
+
   useEffect(() => {
     if (!errorMessage) return;
 
     if (Array.isArray(errorMessage) && errorMessage.length > 0) {
       const formattedErrors = errorMessage
         .map(
-          ({ error }) =>
+          ({ msg }) =>
             `<div style="margin-bottom: 8px;">
-               <span style="color: #d9534f;">${error}</span>
+               <span style="color: #d9534f;">${msg}</span>
             </div>`,
         )
         .join('');
