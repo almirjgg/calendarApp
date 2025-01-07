@@ -4,7 +4,7 @@ import { addHours } from 'date-fns';
 
 import { CalendarEventBox, CalendarModal, FabAddNew, FabDelete, Navbar } from '../';
 import { getMessagesES, localizer } from '../../helpers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUiStore, useCalendarStore } from '../../hooks';
 
 // const events = [
@@ -24,7 +24,7 @@ import { useUiStore, useCalendarStore } from '../../hooks';
 
 export const CalendarPage = () => {
   const { onToggleModalOpen } = useUiStore();
-  const { events, setActiveEvent } = useCalendarStore();
+  const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week');
   const eventStyleGetter = (event, start, end, isSelected) => {
     const style = {
@@ -40,7 +40,6 @@ export const CalendarPage = () => {
 
   const onDoubleClickEvent = event => {
     onToggleModalOpen();
-    console.log({ doubleClickEvent: event });
   };
   const onSelect = event => {
     setActiveEvent(event);
@@ -49,6 +48,11 @@ export const CalendarPage = () => {
     localStorage.setItem('lastView', event);
     setLastView(event);
   };
+
+  useEffect(() => {
+    startLoadingEvents();
+  }, []);
+
   return (
     <>
       <Navbar />
