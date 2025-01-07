@@ -16,16 +16,16 @@ calendarApi.interceptors.request.use(config => {
   return config;
 });
 
-calendarApi.interceptors.response.use(
-  config => {
-    return config;
-  },
-  async error => {
-    if (error.response.status === 401) {
-      console.log('Token no válido');
-    }
-    return Promise.reject(error);
-  },
-);
+// calendarApi.interceptors.response.use(
+//   config => {
+//     return config;
+//   },
+//   async error => {
+//     if (error.response.status === 401) {
+//       console.log('Token no válido');
+//     }
+//     return Promise.reject(error);
+//   },
+// );
 
 export default calendarApi;

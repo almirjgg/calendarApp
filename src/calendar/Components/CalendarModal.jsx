@@ -62,7 +62,6 @@ export const CalendarModal = () => {
     e.preventDefault();
 
     setFormSubmitter(true);
-    onToggleModalOpen();
 
     const diff = differenceInSeconds(formValues.end, formValues.start);
     if (isNaN(diff) || diff <= 0) {
@@ -75,7 +74,6 @@ export const CalendarModal = () => {
     }
 
     await startSaveEvent(formValues);
-    Swal.fire('Guardado', 'El evento ha sido guardado', 'success');
     onToggleModalOpen();
     setFormSubmitter(false);
   };
