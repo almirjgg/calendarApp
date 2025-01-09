@@ -3,6 +3,7 @@ import {
   onAddNewEvent,
   onDeleteEvent,
   onLoadEvents,
+  onLogoutCalendar,
   onSetActiveEvent,
   onUpdateEvent,
 } from '../store';

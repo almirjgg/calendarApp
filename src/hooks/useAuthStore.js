@@ -5,6 +5,7 @@ import {
   onLogout,
   onClearErrorMessage,
   onRegisterErrorMessage,
+  onLogoutCalendar,
 } from '../store';
 import { calendarApi } from '../api';
 import { swlHandlerError } from '../helpers';
@@ -72,6 +73,7 @@ export const useAuthStore = () => {
   const startLogout = async () => {
     removeToken();
     dispatch(onLogout());
+    dispatch(onLogoutCalendar());
   };
 
   return {
